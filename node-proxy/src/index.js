@@ -2,20 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const uuid = require('node-uuid');
-const proxy = require('express-http-proxy');
+const httpProxy = require('http-proxy');
 const nodemailer = require("nodemailer");
 
 let port = 3000;
 if (process.argv[2]) {
     port = parseInt(process.argv[2], 10);
 }
-let proxyTargetPort = 8080;
+let proxyTarget = 'http://localhost:4444';
 if (process.argv[3]) {
-    proxyTargetPort = parseInt(process.argv[3], 10);
-}
-let proxyUrl = '/proxy';
-if (process.argv[4]) {
-    proxyUrl = process.argv[4];
+    proxyTarget = process.argv[3];
 }
 
 function assignId(req, res, next) {
@@ -71,6 +67,8 @@ function prepareMessageBody(req) {
 }
 
 async function main() {
+    const joomlaProxy = httpProxy.createProxyServer();
+
     morgan.token('id', function getId(req) {
         return req.id
     });
@@ -91,11 +89,11 @@ async function main() {
         }
         next();
     });
-    app.use(proxyUrl, proxy(`localhost:${proxyTargetPort}`));
+    app.all('*', function (req, res) {
+        joomlaProxy.web(req, res, {target: proxyTarget});
+    });
 
-    app.get('/', (req, res) => res.send('Hello World!'));
-
-    app.listen(port, () => console.log(`Honeypot app listening on port ${port}, proxy target port ${proxyTargetPort}`));
+    app.listen(port, () => console.log(`Honeypot app listening on port ${port}, proxy target ${proxyTarget}`));
 }
 
 main().catch(console.error);
