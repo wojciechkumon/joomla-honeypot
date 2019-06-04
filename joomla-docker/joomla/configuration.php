@@ -12,10 +12,10 @@ class JConfig {
 	public $debug = '0';
 	public $debug_lang = '0';
 	public $dbtype = 'mysqli';
-	public $host = 'p36a.progreso.pl';
-	public $user = 'janpogocki_joomla';
-	public $password = 'Joomla2019!';
-	public $db = 'janpogocki_joomla';
+	public $host = 'remotemysql.com';
+	public $user = 'iC5J1BqbgB';
+	public $password = 'pB9mCynSew';
+	public $db = 'iC5J1BqbgB';
 	public $dbprefix = 'msfo4_';
 	public $live_site = '';
 	public $secret = 'bdUeyjj9tj24Mkl5';
