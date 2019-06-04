@@ -11,7 +11,7 @@ if (process.argv[2]) {
 }
 let proxyTargetPort = 8080;
 if (process.argv[3]) {
-    proxyTargetPort = parseInt(process.argv[2], 10);
+    proxyTargetPort = parseInt(process.argv[3], 10);
 }
 
 function assignId(req, res, next) {
