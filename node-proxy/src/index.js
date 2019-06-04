@@ -91,7 +91,7 @@ async function main() {
 
     app.get('/', (req, res) => res.send('Hello World!'));
 
-    app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+    app.listen(port, () => console.log(`Honeypot app listening on port ${port}, proxy target port ${proxyTargetPort}`));
 }
 
 main().catch(console.error);
