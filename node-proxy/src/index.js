@@ -15,7 +15,7 @@ if (process.argv[3]) {
 }
 let proxyUrl = '/proxy';
 if (process.argv[4]) {
-    proxyTargetPort = process.argv[4];
+    proxyUrl = process.argv[4];
 }
 
 function assignId(req, res, next) {
