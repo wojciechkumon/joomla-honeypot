@@ -13,6 +13,10 @@ let proxyTargetPort = 8080;
 if (process.argv[3]) {
     proxyTargetPort = parseInt(process.argv[3], 10);
 }
+let proxyUrl = '/proxy';
+if (process.argv[4]) {
+    proxyTargetPort = process.argv[4];
+}
 
 function assignId(req, res, next) {
     req.id = uuid.v4();
@@ -87,7 +91,7 @@ async function main() {
         }
         next();
     });
-    app.use('/proxy', proxy(`localhost:${proxyTargetPort}`));
+    app.use(proxyUrl, proxy(`localhost:${proxyTargetPort}`));
 
     app.get('/', (req, res) => res.send('Hello World!'));
 
