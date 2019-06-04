@@ -5,6 +5,10 @@ const uuid = require('node-uuid');
 const proxy = require('express-http-proxy');
 const nodemailer = require("nodemailer");
 
+let port = 3000;
+if (process.argv[2]) {
+    port = parseInt(process.argv[2], 10);
+}
 
 function assignId(req, res, next) {
     req.id = uuid.v4();
@@ -64,7 +68,6 @@ async function main() {
     });
 
     const app = express();
-    const port = 3000;
     app.use(assignId);
     app.use(bodyParser.text());
     const logPattern = ':id (:response-time ms)|:remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"';
@@ -75,7 +78,7 @@ async function main() {
             const messageBody = prepareMessageBody(req);
             console.log(`suspected request found: ${req.id}, sending alert (email)...`);
             sendEmail(messageBody)
-                .then(x => console.log('email sent'))
+                .then(() => console.log('email sent'))
                 .catch(e => console.error('error while sending email', e));
         }
         next();
