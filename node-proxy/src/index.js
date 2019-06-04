@@ -27,10 +27,10 @@ const isSuspectedUserAgent = userAgent => {
 };
 
 async function sendEmail(messageBody) {
-    const user = 'joomla_honeypot@onet.pl';
+    const user = 'joomla_honeypot@janpogocki.pl';
     const pass = 'Joomla1:)';
     const transporter = nodemailer.createTransport({
-        host: 'smtp.poczta.onet.pl',
+        host: 'janpogocki.civ.pl',
         port: 465,
         secure: true,
         auth: {user, pass}
